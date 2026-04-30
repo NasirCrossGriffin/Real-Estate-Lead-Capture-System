@@ -538,7 +538,7 @@ function IngestionPage() {
             {loading === false && validService === true ? <div className='IngestionPage'>
             <div className='SystemBackground'>
                 <div className='SystemBackgroundOverlay'></div>
-                <div className='SystemBackgroundImage'><img src='/images/background.jpg' /></div>
+                <div className='SystemBackgroundImage'><img src={`${BASE_URL}/images/background.jpg'`} /></div>
             </div>
 
             <div className='NavBar'>
@@ -686,7 +686,7 @@ function IngestionPage() {
 
                                 <button className='UploadButton' onClick={handleUploadButtonClick}>
                                     {/*<img src={BASE_URL + '/images' + '/upload.png'} />*/}
-                                    <img src='/images/upload.png' />
+                                    <img src={`${BASE_URL}/images/upload.png'`} />
                                 </button>
                                 
                                 <div className='UploadedPhotosContainer fade-scroll'> 
@@ -859,7 +859,7 @@ function IngestionPage() {
             
             <div className='LoadingPage'>
                 <div className='LoadingImage'>
-                    <img src='/images/loading.png'/>
+                    <img src={`${BASE_URL}/images/loading.png'`}/>
                 </div>
             </div>}
 
