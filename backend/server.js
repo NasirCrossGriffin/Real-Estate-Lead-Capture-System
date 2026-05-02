@@ -14,7 +14,7 @@ app.use(express.json());
 const port = process.env.PORT
 
 //Cors Settings
-const devOrigins = [
+const permittedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
   "http://localhost:5175",
@@ -24,11 +24,15 @@ const devOrigins = [
   "http://127.0.0.1:5173",
   "http://127.0.0.1:3000",
   "http://127.0.0.1:4200",
+  "http://nasirgriffin.com",
+  "http://www.nasirgriffin.com",
+  "https://nasirgriffin.com",
+  "https://www.nasirgriffin.com"
 ];
 
 app.use(
   cors({
-    origin: devOrigins,          // do NOT use "*" with credentials
+    origin: permittedOrigins,          // do NOT use "*" with credentials
     credentials: true,           // needed if frontend uses fetch(..., { credentials: 'include' })
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],

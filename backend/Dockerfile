@@ -8,6 +8,6 @@ RUN npm install --legacy-peer-deps
 
 COPY . .
 
-EXPOSE 4003
+EXPOSE 4004
 
 CMD ["node", "server.js"]

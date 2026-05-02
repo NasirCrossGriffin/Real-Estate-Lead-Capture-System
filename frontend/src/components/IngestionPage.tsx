@@ -538,7 +538,7 @@ function IngestionPage() {
             {loading === false && validService === true ? <div className='IngestionPage'>
             <div className='SystemBackground'>
                 <div className='SystemBackgroundOverlay'></div>
-                <div className='SystemBackgroundImage'><img src={`${BASE_URL}/images/background.jpg'`} /></div>
+                <div className='SystemBackgroundImage'><img src={`${BASE_URL}/images/background.jpg`} /></div>
             </div>
 
             <div className='NavBar'>
@@ -617,7 +617,7 @@ function IngestionPage() {
                                         value={email}
                                         onInput={(e) => setEmail(e.currentTarget.value)}
                                     />
-                                    <p>* Phone number is used to contact qualified inquirers with requested services</p>
+                                    <p>* Email is used to contact qualified inquirers with requested services</p>
                                 </div>
                             </div>
                         </div>
@@ -686,7 +686,7 @@ function IngestionPage() {
 
                                 <button className='UploadButton' onClick={handleUploadButtonClick}>
                                     {/*<img src={BASE_URL + '/images' + '/upload.png'} />*/}
-                                    <img src={`${BASE_URL}/images/upload.png'`} />
+                                    <img src={`${BASE_URL}/images/upload.png`} />
                                 </button>
                                 
                                 <div className='UploadedPhotosContainer fade-scroll'> 
@@ -859,7 +859,7 @@ function IngestionPage() {
             
             <div className='LoadingPage'>
                 <div className='LoadingImage'>
-                    <img src={`${BASE_URL}/images/loading.png'`}/>
+                    <img src={`${BASE_URL}/images/loading.png`}/>
                 </div>
             </div>}
 

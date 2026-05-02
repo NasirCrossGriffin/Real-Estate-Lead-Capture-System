@@ -9,7 +9,7 @@ sudo git pull origin master || {
         exit 1
 }
 
-cd /portfolio/Real-Estate-Lead-Capture-System/collisiondemo || {
+cd /portfolio/Real-Estate-Lead-Capture-System/frontend || {
         echo "Unable to change directories."
         exit 1
 }

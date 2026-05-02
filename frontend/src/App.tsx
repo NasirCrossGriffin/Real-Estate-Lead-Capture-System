@@ -9,7 +9,7 @@ function App() {
 
   return (
     <>
-      <BrowserRouter basename='/lead'>
+      <BrowserRouter basename='/realestate'>
         <Routes>
                 <>
                     <Route path="/" element={<Navigate to="/service" />} />
