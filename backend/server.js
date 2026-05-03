@@ -90,6 +90,7 @@ app.use(`${process.env.BASE_URL}/api/real-estate-query`, require('./routes/real-
 app.use(`${process.env.BASE_URL}/api/real-estate-photo`, require('./routes/real-estate-photo'));
 app.use(`${process.env.BASE_URL}/api/query-response`, require('./routes/query-response'));
 app.use(`${process.env.BASE_URL}/api/s3`, require('./routes/upload'));
+app.use(`${process.env.BASE_URL}/api/notes`, require('./routes/note'));
 
 
 // Serve frontend build

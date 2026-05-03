@@ -3,9 +3,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import '../styles/Admin.css'
 import { check } from './middleware/admin.ts';
 import { getOrganizationByName } from './middleware/organization.ts';
-import { getRealEstateQueriesByOrganization, updateRealEstateQuery } from './middleware/real-estate-query.ts';
+import { getFilteredRealEstateQueriesByOrganization, getRealEstateQueriesByOrganization, updateRealEstateQuery } from './middleware/real-estate-query.ts';
 import { getUserById } from './middleware/user.ts';
 import ViewEstimate from './ViewEstimate.tsx';
+import { GetRealEstatePhotos } from './middleware/real-estate-photo.ts';
 
 function Admin() {
     const [organization, setOrganization] = useState<any>(null);
@@ -14,6 +15,33 @@ function Admin() {
     const [isAdmin, setIsAdmin] = useState<Boolean>(false);
     const [selectedRealEstateQuery, setSelectedRealEstateQuery] = useState(null);
     const [viewEstimate, setViewEstimate] = useState<Boolean>(false);
+    const [inquiryPhotoStatus, setInquiryPhotoStatus] = useState<Array<boolean>>([]);
+    const [viewNavDrawer, setViewNavDrawer] = useState<boolean>();
+
+    // Filters
+    const [inForeclosureOnly, setInForeclosureOnly] = useState(false);
+    const [withPhotosOnly, setWithPhotosOnly] = useState(false);
+    const [sortByFollowUpDate, setSortByFollowUpDate] = useState(false);
+    const [sortByStatus, setSortByStatus] = useState(false);
+    const [showUnviewedOnly, setShowUnviewedOnly] = useState(false);
+
+    useEffect(() => {
+        console.log(organization)
+        async function getFilteredResults() {
+            const filteredQueries = await getFilteredRealEstateQueriesByOrganization(
+                organization._id,
+                {
+                    inForeclosureOnly,
+                    withPhotosOnly,
+                    sortByFollowUpDate,
+                    sortByStatus,
+                    showUnviewedOnly,
+                }
+            );
+
+            setInquiries(filteredQueries)
+        } getFilteredResults();
+    }, [inForeclosureOnly, withPhotosOnly, sortByFollowUpDate, sortByStatus, showUnviewedOnly])
 
     useEffect(() => {
         const validateAdmin = async () => { 
@@ -51,20 +79,6 @@ function Admin() {
     }, [isAdmin])
 
     useEffect(() => {
-        async function getUsers() {
-            const protoUsers = [];
-
-            for (let inquiry of inquiries) {
-                var protoUser = await getUserById(inquiry.user._id.toString());
-                protoUsers.push(protoUser);
-            }
-
-            console.log(protoUsers);
-            setUsers(protoUsers);
-        }; getUsers()
-    }, [inquiries])
-
-    useEffect(() => {
         const getOrganization = async () => {
             const protoOrganization = await getOrganizationByName("test");
             console.log(protoOrganization)
@@ -100,27 +114,147 @@ function Admin() {
     const navigate = useNavigate();
 
     async function loadInquiries() {
-        const protoInquiries = await getRealEstateQueriesByOrganization(organization._id);
+        const protoInquiries = await getFilteredRealEstateQueriesByOrganization(
+            organization._id,
+            {
+                inForeclosureOnly,
+                withPhotosOnly,
+                sortByFollowUpDate,
+                sortByStatus,
+                showUnviewedOnly,
+            }
+        );
         console.log(protoInquiries)
         setInquiries(protoInquiries);
     }; 
 
+    function setStatusColor(status : string) {
+        switch (status) {
+            case "new":
+                return "blue";
+                break;
+            case "contacted":
+                return "yellow";
+                break;
+            case "appointment_set":
+                return "orange";
+                break;
+            case "under_contract":
+                return "pink";
+                break;
+            case "closed":
+                return "green";
+                break;
+            case "dead":
+                return "red";
+                break;
+        } return "black";
+    }
+
+    function getFollowUpColor(isoString: string): "green" | "yellow" | "orange" | "red" {
+        const target = new Date(isoString);
+        const now = new Date();
+      
+        // Normalize both dates to midnight to compare only by date
+        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+        const targetDate = new Date(target.getFullYear(), target.getMonth(), target.getDate());
+      
+        const diffMs = targetDate.getTime() - today.getTime();
+        const diffDays = diffMs / (1000 * 60 * 60 * 24);
+      
+        if (diffDays < 0) return "red";        // past date
+        if (diffDays === 0) return "orange";   // today
+        if (diffDays <= 3) return "yellow";    // within 3 days
+        return "green";                        // more than 3 days away
+    }
+
+    async function populateHasPhotos() {
+        const hasPhotos = [];
+        for (const inquiry of inquiries) {
+            const inquiryPhotos = await GetRealEstatePhotos(inquiry._id);
+
+            if (inquiryPhotos.length > 0) {
+                hasPhotos.push(true);
+                continue;
+            }
+
+            hasPhotos.push(false);
+        }
+
+        console.log(hasPhotos)
+
+        setInquiryPhotoStatus(hasPhotos);
+    }
+
+    useEffect(() => {
+        async function getUsers() {
+            const protoUsers = [];
+
+            for (const inquiry of inquiries) {
+                const protoUser = await getUserById(inquiry.user._id.toString());
+                protoUsers.push(protoUser);
+            }
+
+            console.log(protoUsers);
+            setUsers(protoUsers);
+        }; getUsers(); populateHasPhotos();
+    }, [inquiries])
+
     return (
         <>
             {viewEstimate ? <ViewEstimate loadInquiries={loadInquiries} realEstateQuery={selectedRealEstateQuery} setViewEstimate={setViewEstimate} organization={organization} /> : null}
-            <div className='AdminDashboard'>
-                {organization ? <div className='Logo'>
+            <div className="AdminNav">
+                <div className='NavDrawerButton' onClick={() => setViewNavDrawer(!viewNavDrawer)}>
+                    <span style={{backgroundColor : viewNavDrawer ? "black" : "white"}}></span>
+                    <span style={{backgroundColor : viewNavDrawer ? "black" : "white"}}></span>
+                    <span style={{backgroundColor : viewNavDrawer ? "black" : "white"}}></span>
+                </div>
+                {organization ? 
+                <div className='Logo'>
                     <img src={organization.logo} />
                 </div> : null}
+                {
+                    viewNavDrawer ? <div className='NavDrawer'>
+                        <div className='NavDrawerBackground' onClick={() => {setViewNavDrawer(!viewNavDrawer)}}></div>
+                        <div className='NavDrawerContainer'>
+                            <div className='FilterOptions'>
+                                <button style={{backgroundColor : inForeclosureOnly ? "green" : "black"}} onClick={() => setInForeclosureOnly(v => !v)}>
+                                    In Foreclosure
+                                </button>
+
+                                <button style={{backgroundColor : withPhotosOnly ? "green" : "black"}} onClick={() => setWithPhotosOnly(v => !v)}>
+                                    With Photos
+                                </button>
+
+                                <button style={{backgroundColor : sortByFollowUpDate ? "green" : "black"}} onClick={() => setSortByFollowUpDate(v => !v)}>
+                                    Sort By Follow Up Date
+                                </button>
+
+                                <button style={{backgroundColor : sortByStatus ? "green" : "black"}} onClick={() => setSortByStatus(v => !v)}>
+                                    Sort By Status
+                                </button>
+
+                                <button style={{backgroundColor : showUnviewedOnly ? "green" : "black"}} onClick={() => setShowUnviewedOnly(v => !v)}>
+                                    Show Unviewed Only
+                                </button>
+                            </div>
+                        </div>
+                    </div> : null
+                }
+            </div>
+            <div className='AdminDashboard'>
 
                 <div className='EstimateContainer'>
                     {
-                        inquiries && inquiries.length > 0 && users && users.length > 0 ? inquiries.map((inquiry : any, index : number) => (
+                        inquiries && inquiries.length > 0 && users && users.length > 0 && inquiryPhotoStatus.length > 0 ? inquiries.map((inquiry : any, index : number) => (
                             <div className='Estimate' style={{borderColor: inquiry.viewed ? "black" : "rgb(0, 102, 255)", borderStyle: "solid", borderWidth: "2px", boxShadow: inquiry.viewed ? "0px 0px 0px 0px rgb(0, 0, 0, 0)" : "0px 0px 20px 10px rgb(0, 102, 255)" }} onClick={() => {clickHandler(index)}}>
-                                <p>{users[index].firstName + " " + users[index].lastName}</p>
+                                {users.length > 0 ? <p>{users[index] ? (users[index].firstName + " " + users[index].lastName) : null}</p> : null}
                                 <p>Looking to {inquiry.service}</p>
                                 <p>{formatIsoString(inquiry.createdAt)}</p>
                                 <p>facing foreclosure: {(inquiry.facingForeclosure).toString()}</p>
+                                <p style={{color : setStatusColor(inquiry.status)}}>{inquiry.status}</p>
+                                <p style={{color : getFollowUpColor(inquiry.followUpDate)}}>{formatIsoString(inquiry.followUpDate)}</p>
+                                <p style={{color : inquiryPhotoStatus[index] ? "green" : "white"}}>{inquiryPhotoStatus[index] ? "Has Photos" : "No Photos"}</p>
                             </div>                     
                         )) : null
                     }

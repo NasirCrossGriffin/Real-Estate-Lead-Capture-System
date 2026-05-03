@@ -84,6 +84,7 @@ function IngestionPage() {
     const [realEstateQuery, setRealEstateQuery] = useState<any>(null);
     const [dt, setDt] = useState<Dayjs | null>(dayjs());
     const [loading, setLoading] = useState<boolean>(true);
+    const [screenHeight, setScreenHeight] = useState<number>(0);
 
      useEffect(() => {
         setLoading(false);
@@ -100,20 +101,27 @@ function IngestionPage() {
 
      useEffect(() => {
         const setHeight = () => {
-            const height = window.visualViewport
-            ? window.visualViewport.height
-            : window.innerHeight;
+            const height = window.innerHeight;
+
+            console.log(height);
 
             document.documentElement.style.setProperty("--app-height", `${height}px`);
         };
 
         setHeight();
 
-        window.addEventListener("orientationchange", setHeight);
+        function handleViewportChange() {
+            // Let mobile Chrome finish resizing after orientation/UI changes
+            requestAnimationFrame(() => {
+              requestAnimationFrame(() => {
+                setHeight();
+              });
+            });
+          }
 
-        return () => {
-            window.removeEventListener("orientationchange", setHeight);
-        };
+        screen.orientation.addEventListener("change", (event) => {
+            handleViewportChange();
+          });
     }, []);
 
     useEffect(() => {
@@ -460,8 +468,6 @@ function IngestionPage() {
     }
 
     async function submitInquiry() {
-        autofill();
-
         const validated = runAllValidators();
 
         console.log(validated);

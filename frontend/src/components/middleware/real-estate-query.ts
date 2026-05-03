@@ -177,3 +177,61 @@ export async function deleteRealEstateQuery(realEstateQueryId: string) {
     return null;
   }
 }
+
+export type RealEstateQueryFilters = {
+  inForeclosureOnly?: boolean;
+  withPhotosOnly?: boolean;
+  sortByFollowUpDate?: boolean;
+  sortByStatus?: boolean;
+  showUnviewedOnly?: boolean;
+};
+
+export async function getFilteredRealEstateQueriesByOrganization(
+  organizationId: string,
+  filters?: RealEstateQueryFilters
+) {
+  try {
+    const url = await getBaseUrl();
+
+    const params = new URLSearchParams();
+
+    if (filters?.inForeclosureOnly !== undefined) {
+      params.append("inForeclosureOnly", String(filters.inForeclosureOnly));
+    }
+
+    if (filters?.withPhotosOnly !== undefined) {
+      params.append("withPhotosOnly", String(filters.withPhotosOnly));
+    }
+
+    if (filters?.sortByFollowUpDate !== undefined) {
+      params.append("sortByFollowUpDate", String(filters.sortByFollowUpDate));
+    }
+
+    if (filters?.sortByStatus !== undefined) {
+      params.append("sortByStatus", String(filters.sortByStatus));
+    }
+
+    if (filters?.showUnviewedOnly !== undefined) {
+      params.append("showUnviewedOnly", String(filters.showUnviewedOnly));
+    }
+
+    const thisUrl = `${url}/api/real-estate-query/organization/${encodeURIComponent(
+      organizationId
+    )}/filtered${params.toString() ? `?${params.toString()}` : ""}`;
+
+    const response = await fetch(thisUrl, {
+      headers: { "content-type": "application/json" },
+      method: "GET",
+    });
+
+    if (response.ok) {
+      const filteredQueries = await response.json();
+      return filteredQueries;
+    } else {
+      return null;
+    }
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+}

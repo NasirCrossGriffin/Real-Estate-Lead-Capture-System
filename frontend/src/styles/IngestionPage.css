@@ -101,7 +101,7 @@
         top : 0;
         z-index: -2;
         width : 100vw;
-        height: var(--app-height);
+        height: 100lvh;
 
         display: flex;
         flex-direction: column;

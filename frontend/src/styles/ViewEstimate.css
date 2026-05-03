@@ -5,7 +5,7 @@
         left: 0;
         width : 100vw;
         height: 100vh;
-        z-index: 5;
+        z-index: 15;
     }
 
     .Background {
@@ -200,6 +200,121 @@
         font-size: 1.5vw;
     }
 
+    .NewNote {
+        width: 80%;
+        aspect-ratio: 12/5;
+    }
+
+    .ToggleNoteButton {
+        border-radius: 25px;
+        background-color: white;
+        color: black;
+        font-family: 'Montserrat';
+        margin-bottom: 25px;
+    }
+
+    .NewNote textarea {
+        width: 100%;
+        aspect-ratio: 5/1;
+        resize: none;
+        font-size: 1.5vw;
+        font-family: 'Montserrat';
+        background-color: rgb(64, 64, 64);
+        color: white;
+    }
+
+    .NewNote button {
+        border-radius: 25px;
+        background-color: white;
+        color: black;
+        font-family: 'Montserrat';
+    }
+
+    .NotesContainer {
+        width: 80%;
+        height: fit-content;
+        max-height: 30vw;
+        border-style: solid;
+        border-color: white;
+        border-radius: 25px;
+        background-color: rgb(64, 64, 64);
+        border-width: 2px;
+        padding: 15px 15px 15px 15px;
+        overflow-y: auto;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .NotesGrid {
+        display: grid;
+        place-items: center;
+        grid-template-columns: repeat(3, 1fr);
+        row-gap: 20px;
+        column-gap: 20px;
+        width: 90%;
+    }
+
+    .Note {
+        background-color: black;
+        width: 100%;
+        aspect-ratio: 1/1;
+        border-style: solid;
+        border-color: white;
+        border-radius: 25px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .Note .Date{
+        height: 10%;
+        width: 95%;
+        text-align: center;
+        font-family: 'Montserrat';
+    }
+
+    .NotePreview {
+        height: 90%;
+        width: 95%;
+        overflow-y: hidden;
+        font-family: 'Montserrat';
+    }
+
+    .UpdateStatusSelect {
+        width: 40%;
+        aspect-ratio: 12/1;
+        font-family: 'Montserrat';
+        font-size: 1.4vw;
+        background-color: rgb(64, 64, 64);
+        color: white;
+        border-color: white;
+    }
+
+    .InputFollowUpDate {
+        width: 40%;
+        aspect-ratio: 12/1;
+        font-family: 'Montserrat';
+        font-size: 1.4vw;
+        background-color: rgb(64, 64, 64);
+        color: white;
+        border-color: white;
+    }
+
+    .InputFollowUpTime {
+        width: 40%;
+        aspect-ratio: 12/1;
+        font-family: 'Montserrat';
+        font-size: 1.4vw;
+        background-color: rgb(64, 64, 64);
+        color: white;
+        border-color: white;
+    }
+
     
 }
 
@@ -381,7 +496,7 @@
     .LeadCapture div {
         position: relative;
         width: 100%;
-        height: 5vw;
+        height: 20vw;
     }
 
     .LeadCapture div button {
@@ -404,18 +519,138 @@
         left: 0;
         top : 50%;
         transform: translateY(-50%);
-        animation: spin 2s linear infinite;
     }
 
     .LoadingIcon img {
         object-fit: contain;
         height: 100%;
         width: fit-content;
+
+        animation: spin 2s linear infinite;
     }
 
     .ResponseSent {
         width: 100%;
         font-size: 4vw;
+    }
+
+    .NewNote {
+        width: 80%;
+        aspect-ratio: 12/5;
+        margin-bottom: 20px;
+    }
+
+    .ToggleNoteButton {
+        border-radius: 25px;
+        background-color: white;
+        color: black;
+        font-family: 'Montserrat';
+        margin-bottom: 25px;
+    }
+
+    .NewNote textarea {
+        width: 100%;
+        aspect-ratio: 1/1;
+        resize: none;
+        font-size: 4vw;
+        font-family: 'Montserrat';
+        background-color: rgb(64, 64, 64);
+        color: white;
+    }
+
+    .NewNote button {
+        border-radius: 25px;
+        background-color: white;
+        color: black;
+        font-family: 'Montserrat';
+    }
+
+    .NotesContainer {
+        width: 80%;
+        height: fit-content;
+        max-height: 120vw;
+        border-style: solid;
+        border-color: white;
+        border-radius: 25px;
+        background-color: rgb(64, 64, 64);
+        border-width: 2px;
+        padding: 15px 15px 15px 15px;
+        overflow-y: auto;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .NotesGrid {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 90%;
+    }
+
+    .Note {
+        background-color: black;
+        width: 100%;
+        aspect-ratio: 1/1;
+        border-style: solid;
+        border-color: white;
+        border-radius: 25px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .Note .Date{
+        height: 10%;
+        width: 95%;
+        text-align: center;
+        font-family: 'Montserrat';
+    }
+
+    .NotePreview {
+        height: 90%;
+        width: 95%;
+        overflow-y: hidden;
+        font-family: 'Montserrat';
+    }
+
+    .UpdateStatusSelect {
+        width: 90%;
+        aspect-ratio: 12/1;
+        font-family: 'Montserrat';
+        font-size: 4vw;
+        background-color: rgb(64, 64, 64);
+        color: white;
+        border-color: white;
+    }
+
+    .InputFollowUpDate {
+        width: 90%;
+        aspect-ratio: 12/1;
+        font-family: 'Montserrat';
+        font-size: 4vw;
+        background-color: rgb(64, 64, 64);
+        color: white;
+        border-color: white;
+    }
+
+    .InputFollowUpTime {
+        width: 90%;
+        aspect-ratio: 12/1;
+        font-family: 'Montserrat';
+        font-size: 4vw;
+        background-color: rgb(64, 64, 64);
+        color: white;
+        border-color: white;
+    }
+
+    .ContentContainer h1 {
+        font-size: 6vw;
     }
 }
 

@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const RealEstateQuery = require('../models/real-estate-query');
+const RealEstatePhoto = require("../models/real-estate-photo");
+
 
 // CREATE
 router.post('/', async (req, res) => {
@@ -135,6 +137,88 @@ router.delete('/:id', async (req, res) => {
     return res.status(200).json({ deleted: true, id: req.params.id });
   } catch (err) {
     return res.status(400).json({ error: err.message });
+  }
+});
+
+// GET /api/real-estate-query/organization/:organizationId/filtered
+router.get("/organization/:organizationId/filtered", async (req, res) => {
+  try {
+    const { organizationId } = req.params;
+
+    const {
+      inForeclosureOnly,
+      withPhotosOnly,
+      sortByFollowUpDate,
+      sortByStatus,
+      showUnviewedOnly,
+    } = req.query;
+
+    const filters = {
+      organization: organizationId,
+    };
+
+    if (inForeclosureOnly === "true") {
+      filters.facingForeclosure = true;
+    }
+
+    if (showUnviewedOnly === "true") {
+      filters.viewed = false;
+    }
+
+    let queries = await RealEstateQuery.find(filters)
+      .populate("user")
+      .sort({ createdAt: -1 });
+
+    // Special photo filtering
+    if (withPhotosOnly === "true") {
+      const queryIds = queries.map((q) => q._id);
+
+      const photos = await RealEstatePhoto.find({
+        realEstateQuery: { $in: queryIds },
+      }).select("realEstateQuery");
+
+      const queryIdsWithPhotos = new Set(
+        photos.map((photo) => photo.realEstateQuery.toString())
+      );
+
+      queries = queries.filter((query) =>
+        queryIdsWithPhotos.has(query._id.toString())
+      );
+    }
+
+    // Sort by follow-up date
+    if (sortByFollowUpDate === "true") {
+      queries.sort((a, b) => {
+        const dateA = new Date(a.followUpDate).getTime();
+        const dateB = new Date(b.followUpDate).getTime();
+        return dateA - dateB;
+      });
+    }
+
+    // Sort by status
+    if (sortByStatus === "true") {
+      const statusOrder = {
+        new: 1,
+        contacted: 2,
+        appointment_set: 3,
+        offer_made: 4,
+        under_contract: 5,
+        closed: 6,
+        dead: 7,
+      };
+
+      queries.sort((a, b) => {
+        return statusOrder[a.status] - statusOrder[b.status];
+      });
+    }
+
+    res.status(200).json(queries);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      message: "Failed to get filtered real estate queries",
+      error: err.message,
+    });
   }
 });
 

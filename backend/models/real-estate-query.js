@@ -117,7 +117,27 @@ const RealEstateQuerySchema = new mongoose.Schema(
       type: Boolean,
       required: true,
       default: false
-    }
+    },
+    status: {
+      type: String,
+      required: true,
+      trim: true,
+      enum: [
+        'new',
+        'contacted',
+        'appointment_set',
+        'offer_made',
+        'under_contract',
+        'closed',
+        'dead',
+      ],
+      default: 'new'
+    },
+    followUpDate: {
+      type: Date,
+      required: true,
+      default: (new Date).toISOString()
+    },
   },
   {
     timestamps: true,
