@@ -30,6 +30,22 @@
   animation: fadeInSlideUp 0.5s ease forwards;
 }
 
+@media (orientation : landscape) {
+  .Gratitude .Logo {
+    width : 20vw;
+    height: 20vw;
+  }
+}
+
+@media (orientation : portrait) {
+  .Gratitude .Logo {
+    width : 50vw;
+    height: 50vw;
+  }
+}
+
+
+
 
 @keyframes fadeInSlideUp {
   to {

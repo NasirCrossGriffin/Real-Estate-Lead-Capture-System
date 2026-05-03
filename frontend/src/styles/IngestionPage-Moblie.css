@@ -469,6 +469,11 @@
     margin-bottom: 3vw;
 }
 
+.Gratitude .Logo {
+    width : 30vw;
+    aspect-ratio: 1/1;
+}
+
 .MakeGridContainer::-webkit-scrollbar {
   width: 10px;
 }
@@ -926,6 +931,12 @@
         color: rgb(0, 102, 255);
         transform: scale(1.2);
     }
+
+    .Gratitude .Logo {
+        width : 50vw;
+        aspect-ratio: 1/1;
+    }
+    
 }
  /* Scroll container with bottom fade */
 .fade-scroll {
