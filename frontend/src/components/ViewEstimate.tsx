@@ -35,6 +35,8 @@ function ViewEstimate({
     const [status, setStatus] = useState<string>("");
     const [followUpDate, setFollowUpDate] = useState<string>("");
 
+    const BASE_URL = import.meta.env.DEV ? import.meta.env.VITE_API_DEV_BASE_URL : import.meta.env.VITE_API_PROD_BASE_URL;
+
     useEffect(() => {
         console.log(selectedNote)
     }, [selectedNote])
@@ -403,7 +405,7 @@ function ViewEstimate({
                             <textarea value={message} onInput={(e) => {setMessage(e.currentTarget.value)}} />
                             <div>
                                 <>{ loading === false && responseSent === false ? <button onClick={() => {clickHandler()}}>Respond</button> : null }</>
-                                <>{ loading && responseSent === false ? <div className='LoadingIcon'><img src="/images/loading.png" /></div> : null }</>
+                                <>{ loading && responseSent === false ? <div className='LoadingIcon'><img src={`${BASE_URL}/images/loading.png`} /></div> : null }</>
                                 <>{ responseSent ? <div className='ResponseSent'><h2 style={{color : "green"}}>Response sent successfully</h2></div> : null }</>
                             </div>
                         </div>

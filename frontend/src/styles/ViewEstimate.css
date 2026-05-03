@@ -186,13 +186,13 @@
         left: 0;
         top : 50%;
         transform: translateY(-50%);
-        animation: spin 2s linear infinite;
     }
 
     .LoadingIcon img {
         object-fit: contain;
         height: 100%;
         width: fit-content;
+        animation: spin 2s linear infinite;
     }
 
     .ResponseSent {
