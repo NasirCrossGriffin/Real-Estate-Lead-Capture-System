@@ -41,11 +41,11 @@
         width: 95vw;
         aspect-ratio: 20/1;
         padding: 1vw 1vw 1vw 1vw;
-        background-color: rgb(64, 64, 64);
+        background-color: black;
         border-radius: 25px;
         margin-top: 1vw;
         margin-bottom: 1vw;
-        border-color: transparent;
+        border-color: white;
         border-width: 2px;
         border-style: solid;
         color : white
@@ -54,6 +54,7 @@
     .Estimate p {
         text-align: center;
         font-weight: 700;
+        font-family: 'Montserrat';
     }
 
     .Estimate:hover {
@@ -184,6 +185,8 @@
         overflow-y: auto;
 
         padding-bottom: 100px;
+        padding-top: 150px;
+
     }
 
     .Estimate {
@@ -193,11 +196,11 @@
         width: 80%;
         height: fit-content;
         padding: 1vw 1vw 1vw 1vw;
-        background-color: rgb(64, 64, 64);
+        background-color: black;
         border-radius: 25px;
         margin-top: 10vw;
         margin-bottom: 10vw;
-        border-color: transparent;
+        border-color: white;
         border-width: 2px;
         border-style: solid;
         color : white
@@ -206,6 +209,7 @@
     .Estimate p {
         text-align: center;
         font-weight: 700;
+        font-family: 'Montserrat';
     }
 
     .Estimate:hover {

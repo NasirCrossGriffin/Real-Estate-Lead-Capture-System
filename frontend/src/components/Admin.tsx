@@ -145,10 +145,13 @@ function Admin() {
             case "closed":
                 return "green";
                 break;
+            case "offer_made":
+                return "purple";
+                break;
             case "dead":
                 return "red";
                 break;
-        } return "black";
+        } return "grey";
     }
 
     function getFollowUpColor(isoString: string): "green" | "yellow" | "orange" | "red" {
