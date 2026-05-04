@@ -229,6 +229,16 @@
         flex-direction: column;
     }
 
+    @media (min-width : 600px) {
+        .AdminNav {
+            height: 7lvh;
+        }
+
+        .EstimateContainer {
+            padding-top: 50px;
+        }
+    }
+
     .NavDrawerButton {
         position: absolute;
         height: 40%;
