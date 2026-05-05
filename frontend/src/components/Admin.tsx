@@ -119,7 +119,7 @@ function Admin() {
             const protoInquiries = await getRealEstateQueriesByOrganization(organization._id);
             console.log(protoInquiries)
             setInquiries(protoInquiries);
-        }; getInquiries(); setLoading(false);
+        }; getInquiries();
     }, [isAdmin])
 
     useEffect(() => {
@@ -246,8 +246,15 @@ function Admin() {
 
             console.log(protoUsers);
             setUsers(protoUsers);
-        }; getUsers(); populateHasPhotos();
+        }; getUsers(); populateHasPhotos(); 
     }, [inquiries])
+
+    useEffect(() => {
+        if (users) setLoading(false);
+    }, [users])
+
+    
+
 
     return (
         <>
