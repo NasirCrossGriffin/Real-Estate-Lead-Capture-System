@@ -43,6 +43,7 @@
     }
 
     .ContentContainer {
+        position: relative;
         width: 100%;
         height: fit-content;
         display: flex;
@@ -83,33 +84,84 @@
     }
 
     .EstimatePhotosContainer {
+        position: relative;
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
+        justify-content: center;
         align-items: center;
         width: 80%;
-        aspect-ratio: 16/9;
-        overflow-y: auto;
+        height: 35vw;
+    }
+
+    .RealEstatePhoto {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .RealEstatePhoto img {
+        position: relative;
+        object-fit: contain;
+        width: auto;
+        max-width: 100%;
+        height: 100%;
+        max-height: 100%;
+    }
+
+    .PhotoButtons {
+        width: 100%;
+        height: 10%;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .PhotoButtons button {
+        border-radius: 25px;
+        background-color: white;
+        color: black;
+        font-family: 'Montserrat';
+        margin-left: 10%;
+        margin-right: 10%;
+        min-width: 20%;
+    }
+
+    .Navigator {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top : 0;
+        left : 0;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        z-index: 16;
+    }
+
+    .LeftNav {
+        width: 50%;
+        height: 100%;
+    }
+
+    .RightNav {
+        width: 50%;
+        height: 100%;
     }
 
     .EstimatePhotos {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        row-gap: 2vw;
-        column-gap: 2vw;
-        place-items: center;
+        position: relative;
         width: 100%;
-    }
-
-    .EstimatePhoto {
-        width: 100%;
-        height: 100%;
-    }
-
-    .EstimatePhoto img{
-        object-fit: contain;
-        width: 100%;
-        height: 100%;
+        height: 90%;
     }
 
     .EstimatePrice {
@@ -404,40 +456,86 @@
     }
 
     .EstimatePhotosContainer {
+        position: relative;
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
+        justify-content: center;
         align-items: center;
         width: 80%;
-        aspect-ratio: 9/16;
-        overflow-y: auto;
+        height: 70vw;
     }
 
-    .EstimatePhotosContainer h1 {
-        font-size: 5vw;
-        text-wrap: nowrap;
+    .RealEstatePhoto {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 
+    .RealEstatePhoto img {
+        position: relative;
+        object-fit: contain;
+        width: auto;
+        max-width: 100%;
+        height: 100%;
+        max-height: 100%;
+    }
+
+    .PhotoButtons {
+        width: 100%;
+        height: 10%;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .PhotoButtons button {
+        border-radius: 25px;
+        background-color: white;
+        color: black;
+        font-family: 'Montserrat';
+        margin-left: 10%;
+        margin-right: 10%;
+        min-width: 40%;
+    }
+
+    .Navigator {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top : 0;
+        left : 0;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        z-index: 16;
+    }
+
+    .LeftNav {
+        width: 50%;
+        height: 100%;
+    }
+
+    .RightNav {
+        width: 50%;
+        height: 100%;
+    }
 
     .EstimatePhotos {
-        display: grid;
-        grid-template-columns: 1fr;
-        row-gap: 2vw;
-        column-gap: 2vw;
-        place-items: center;
+        position: relative;
         width: 100%;
+        height: 90%;
     }
 
-    .EstimatePhoto {
-        width: 100%;
-        height: 100%;
-    }
-
-    .EstimatePhoto img{
-        object-fit: contain;
-        width: 100%;
-        height: 100%;
-    }
 
     .EstimatePrice {
         display: flex;

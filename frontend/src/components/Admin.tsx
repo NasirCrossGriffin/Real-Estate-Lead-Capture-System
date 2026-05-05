@@ -7,6 +7,7 @@ import { getFilteredRealEstateQueriesByOrganization, getRealEstateQueriesByOrgan
 import { getUserById } from './middleware/user.ts';
 import ViewEstimate from './ViewEstimate.tsx';
 import { GetRealEstatePhotos } from './middleware/real-estate-photo.ts';
+import { ClassNames } from '@emotion/react';
 
 function Admin() {
     const [organization, setOrganization] = useState<any>(null);
@@ -25,6 +26,49 @@ function Admin() {
     const [sortByStatus, setSortByStatus] = useState(false);
     const [showUnviewedOnly, setShowUnviewedOnly] = useState(false);
 
+    //Lead metrics
+    const [numberOfLeads, setNumberOfLeads] = useState<number>(0);
+    const [recentLeads, setRecentLeads] = useState<number>(0);
+    const [unseenLeads, setUnseenLeads] = useState<number>(0);
+
+    const [loading, setLoading] = useState<boolean>(true);
+
+    const BASE_URL = import.meta.env.DEV ? import.meta.env.VITE_API_DEV_BASE_URL : import.meta.env.VITE_API_PROD_BASE_URL;
+
+    useEffect(() => {
+        const setMetrics = async () => {
+            if (organization === null) return;
+
+            const baseInquiries = await getRealEstateQueriesByOrganization(organization._id)
+
+            if (baseInquiries.length === 0) return ;
+            //Set Number of leads
+            setNumberOfLeads(baseInquiries.length)
+
+            //set recent leads
+            const todaysDate = new Date();
+            let numRecentLeads = 0;
+
+            for (const inquiry of baseInquiries) {
+                const createdAt = new Date(inquiry.createdAt);
+                const timeDifference = Math.abs(todaysDate.valueOf() - createdAt.valueOf()); 
+                if (timeDifference < 259200000) numRecentLeads = numRecentLeads + 1;
+            }
+
+            setRecentLeads(numRecentLeads);
+
+            //set unseen leads
+            let numUnseenLeads = 0;
+
+            for (const inquiry of baseInquiries) {
+                if (inquiry.viewed === false) numUnseenLeads = numUnseenLeads + 1;
+            }
+
+            setUnseenLeads(numUnseenLeads);
+
+        }; setMetrics();
+    }, [organization])
+    
     useEffect(() => {
         console.log(organization)
         async function getFilteredResults() {
@@ -75,10 +119,12 @@ function Admin() {
             const protoInquiries = await getRealEstateQueriesByOrganization(organization._id);
             console.log(protoInquiries)
             setInquiries(protoInquiries);
-        }; getInquiries();
+        }; getInquiries(); setLoading(false);
     }, [isAdmin])
 
     useEffect(() => {
+        setLoading(true)
+
         const getOrganization = async () => {
             const protoOrganization = await getOrganizationByName("test");
             console.log(protoOrganization)
@@ -245,11 +291,26 @@ function Admin() {
                     </div> : null
                 }
             </div>
-            <div className='AdminDashboard'>
+            {inquiries && loading === false ? <div className='AdminDashboard'>
+                <div className='Metrics'>
+                    <div className='Metric'>
+                        <span className='MetricName'>Number of Leads</span>
+                        <span className='MetricValue'>{numberOfLeads}</span>
+                    </div>
 
+                    <div className='Metric'>
+                        <span className='MetricName'>Recent Leads</span>
+                        <span className='MetricValue'>{recentLeads}</span>
+                    </div>
+
+                    <div className='Metric'>
+                        <span className='MetricName'>Unseen Leads</span>
+                        <span className='MetricValue'>{unseenLeads}</span>
+                    </div>
+                </div>
                 <div className='EstimateContainer'>
                     {
-                        inquiries && inquiries.length > 0 && users && users.length > 0 && inquiryPhotoStatus.length > 0 ? inquiries.map((inquiry : any, index : number) => (
+                        inquiries.length > 0 && users && users.length > 0 && inquiryPhotoStatus.length > 0 ? inquiries.map((inquiry : any, index : number) => (
                             <div className='Estimate' style={{borderColor: inquiry.viewed ? "black" : "rgb(0, 102, 255)", borderStyle: "solid", borderWidth: "2px", boxShadow: inquiry.viewed ? "0px 0px 0px 0px rgb(0, 0, 0, 0)" : "0px 0px 20px 10px rgb(0, 102, 255)" }} onClick={() => {clickHandler(index)}}>
                                 {users.length > 0 ? <p>{users[index] ? (users[index].firstName + " " + users[index].lastName) : null}</p> : null}
                                 <p>Looking to {inquiry.service}</p>
@@ -259,10 +320,20 @@ function Admin() {
                                 <p style={{color : getFollowUpColor(inquiry.followUpDate)}}>{formatIsoString(inquiry.followUpDate)}</p>
                                 <p style={{color : inquiryPhotoStatus[index] ? "green" : "white"}}>{inquiryPhotoStatus[index] ? "Has Photos" : "No Photos"}</p>
                             </div>                     
-                        )) : null
+                        )) : <div>
+                            <p>No Inquiries Yet</p>
+                        </div>
                     }
                 </div>
-            </div>
+            </div>  
+            
+            : 
+            
+            <div className='LoadingAdmin'>
+                <div className='LoadingIconAdmin'>
+                    <img src={`${BASE_URL}/images/loading.png`}/>
+                </div>
+            </div>}
         </>
     )
 }

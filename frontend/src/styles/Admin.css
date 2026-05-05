@@ -1,23 +1,45 @@
 @media (orientation: landscape) {
-    .AdminDashboard {
+    .LoadingAdmin {
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        top : 0;
+        left : 0;
+        
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
         align-items: center;
-        position: relative;
+        justify-content: center;
+    }
+
+    .LoadingIconAdmin {
+        width: 30vw;
+        aspect-ratio: 1/1;
+    }
+
+    .LoadingIconAdmin img {
+        object-fit: contain;
+        width: 100%;
+        height: 100%;
+        animation: spin 2s linear infinite;
+    }
+
+    .AdminDashboard {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
         left: 0;
         top : 0;
         width: 100vw;
-        height: 100vh;
         background-color: white;
         z-index: 1;
-        overflow-y: auto;
     }
 
     .EstimateContainer {
         position: relative;
         width: 100%;
-        height: 80%;
         left : 0;
         bottom : 0;
 
@@ -28,8 +50,6 @@
 
         color: white;
         z-index: 5;
-        overflow-y: auto;
-        padding-top: 10vw;
         padding-bottom: 100px;
     }
 
@@ -155,26 +175,81 @@
         color: white;
         font-family: 'Montserrat';
     }
+
+    .Metrics {
+        width: 80%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        margin-top: 20lvh;
+        margin-bottom: 50px;
+    }
+
+    .Metric {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 1.5vw;
+    }
+
+    .MetricName {
+        color: rgb(64, 64, 64);
+        font-family: 'Montserrat';
+        font-weight: 500;
+    }
+
+    .MetricValue {
+        color: black;
+        font-family: 'Montserrat';
+        font-weight: 500;
+    }
 }
 
 @media (orientation: portrait) {
+    .LoadingAdmin {
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        top : 0;
+        left : 0;
+        
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .LoadingIconAdmin {
+        width: 30vw;
+        aspect-ratio: 1/1;
+    }
+
+    .LoadingIconAdmin img {
+        object-fit: contain;
+        width: 100%;
+        height: 100%;
+        animation: spin 2s linear infinite;
+    }
+    
     .AdminDashboard {
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
+        justify-content: flex-start;
         align-items: center;
-        position: relative;
+        position: absolute;
         left: 0;
         top : 0;
         width: 100vw;
-        height: 100vh;
         background-color: white;
     }
 
     .EstimateContainer {
         position: relative;
         width: 100%;
-        height: 90%;
         left : 0;
         bottom : 0;
         display: flex;
@@ -182,14 +257,13 @@
         align-items: center;
         justify-content: flex-start;
         color: white;
-        overflow-y: auto;
-
         padding-bottom: 100px;
-        padding-top: 150px;
+        padding-top: 50px;
 
     }
 
     .Estimate {
+        position: relative;
         display: grid;
         grid-template-columns: 1fr 1fr;
         place-items: center;
@@ -198,7 +272,7 @@
         padding: 1vw 1vw 1vw 1vw;
         background-color: black;
         border-radius: 25px;
-        margin-top: 10vw;
+        margin-top: 5vw;
         margin-bottom: 10vw;
         border-color: white;
         border-width: 2px;
@@ -319,5 +393,59 @@
         border-radius: 25px;
         color: white;
         font-family: 'Montserrat';
+    }
+
+    .Metrics {
+        width: 80%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+
+        margin-top: 15lvh;
+    }
+
+    .Metric {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font-size: 3vw;
+    }
+
+    .MetricName {
+        color: rgb(64, 64, 64);
+        font-family: 'Montserrat';
+        font-weight: 500;
+    }
+
+    .MetricValue {
+        color: black;
+        font-family: 'Montserrat';
+        font-weight: 500;
+    }
+}
+
+.fade-in-slide-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInSlideUp 0.5s ease forwards;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeInSlideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

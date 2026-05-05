@@ -34,6 +34,7 @@ function ViewEstimate({
     const [toggleNote, setToggleNote] = useState<boolean>(false);
     const [status, setStatus] = useState<string>("");
     const [followUpDate, setFollowUpDate] = useState<string>("");
+    const [currentPhoto, setCurrentPhoto] = useState<number>(0);
 
     const BASE_URL = import.meta.env.DEV ? import.meta.env.VITE_API_DEV_BASE_URL : import.meta.env.VITE_API_PROD_BASE_URL;
 
@@ -394,9 +395,20 @@ function ViewEstimate({
 
                         <div className='EstimatePhotosContainer'>
                             {realEstateQuery && realEstateQueryPhotos.length > 0 ? <div className='EstimatePhotos'>
-                                {realEstateQueryPhotos.map((realEstateQueryPhoto, index) => (<div className='EstimatePhoto' key={index}>
-                                    <img src={realEstateQueryPhoto.url}/>
-                                </div>))}
+                                <div className='RealEstatePhoto'>
+                                <div className='Navigator'>
+                                    <div className='LeftNav' onClick={() => currentPhoto > 0 ? setCurrentPhoto(currentPhoto - 1) : null}>
+
+                                    </div>
+                                    <div className='RightNav' onClick={() => currentPhoto < realEstateQueryPhotos.length - 1 ? setCurrentPhoto(currentPhoto + 1) : null}>
+
+                                    </div>
+                                </div>
+                                <img src={realEstateQueryPhotos[currentPhoto].url}/></div>
+                                <div className='PhotoButtons'>
+                                    <button onClick={() => currentPhoto > 0 ? setCurrentPhoto(currentPhoto - 1) : null}>Previous</button>
+                                    <button onClick={() => currentPhoto < realEstateQueryPhotos.length - 1 ? setCurrentPhoto(currentPhoto + 1) : null}>Next</button>
+                                </div>
                             </div> : <h1>No Photos Uploaded</h1>}
                         </div>
 
