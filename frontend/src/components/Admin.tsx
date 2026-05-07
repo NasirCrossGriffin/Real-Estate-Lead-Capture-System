@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from "react-router-dom";
 import '../styles/Admin.css'
 import { check } from './middleware/admin.ts';
-import { getOrganizationByName } from './middleware/organization.ts';
+import { getOrganizationByName, updateOrganization } from './middleware/organization.ts';
 import { getFilteredRealEstateQueriesByOrganization, getRealEstateQueriesByOrganization, updateRealEstateQuery } from './middleware/real-estate-query.ts';
 import { getUserById } from './middleware/user.ts';
 import ViewEstimate from './ViewEstimate.tsx';
@@ -18,6 +18,9 @@ function Admin() {
     const [viewEstimate, setViewEstimate] = useState<Boolean>(false);
     const [inquiryPhotoStatus, setInquiryPhotoStatus] = useState<Array<boolean>>([]);
     const [viewNavDrawer, setViewNavDrawer] = useState<boolean>();
+    const [webhook, setWebhook] = useState<string>("");
+    const [inputWebhook, setInputWebhook] = useState<boolean>(false);
+    const [webhookUploaded, setWebhookUploaded] = useState<boolean | null>(null);
 
     // Filters
     const [inForeclosureOnly, setInForeclosureOnly] = useState(false);
@@ -235,6 +238,8 @@ function Admin() {
         setInquiryPhotoStatus(hasPhotos);
     }
 
+
+
     useEffect(() => {
         async function getUsers() {
             const protoUsers = [];
@@ -253,8 +258,21 @@ function Admin() {
         if (users) setLoading(false);
     }, [users])
 
-    
+    async function linkCRM() {
+        const updatedOrganization = await updateOrganization(
+            organization._id,
+            {webhook : webhook}
+        )
 
+        setOrganization(updatedOrganization);
+
+        if (updatedOrganization) {
+            setWebhookUploaded(true);
+            setInputWebhook(false);
+        } else {
+            setWebhookUploaded(false);
+        }
+    }
 
     return (
         <>
@@ -299,6 +317,25 @@ function Admin() {
                 }
             </div>
             {inquiries && loading === false ? <div className='AdminDashboard'>
+                <div className='CRMIntegration'>
+                    <div className='CRMContainer'>
+                        <button onClick={() => setInputWebhook(!inputWebhook)}>Integrate CRM</button>
+                        {
+                            inputWebhook ? <div>
+                                <input placeholder='Enter Zapier Webhook'/>
+                                <button onClick={() => linkCRM()}>Confirm</button>
+                            </div> : null
+                        }
+                    </div>
+                    {
+                        webhookUploaded !== null ? <div className='WebhookStatus'>
+                            {
+                                webhookUploaded === true ? <p style={{color : "green"}}>Webhook attatched successfully</p> : <p style={{color : "red"}}>Webhook attatchment failed</p>
+                            }
+                        </div> : null
+                    }
+                </div>
+
                 <div className='Metrics'>
                     <div className='Metric'>
                         <span className='MetricName'>Number of Leads</span>
@@ -315,6 +352,7 @@ function Admin() {
                         <span className='MetricValue'>{unseenLeads}</span>
                     </div>
                 </div>
+
                 <div className='EstimateContainer'>
                     {
                         inquiries.length > 0 && users && users.length > 0 && inquiryPhotoStatus.length > 0 ? inquiries.map((inquiry : any, index : number) => (

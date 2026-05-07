@@ -7,8 +7,8 @@
     justify-content: flex-end;
     left: 0;
     top : 0;
-    width: 100vw;
-    height: 100vh;
+    width: var(--app-width);
+    height: var(--app-height);
     background-color: transparent;
 }
 
@@ -16,8 +16,8 @@
         position: relative;
         background-color: white;
         color : black;
-        width: 28vw;
-        font-size: 4vw;
+        width: calc(var(--app-width) * .22);
+        font-size: 3vw;
         border-radius: 25px;
         font-family: 'Montserrat';
         box-shadow: 0 0 5px 5px rgb(139, 139, 139);
@@ -33,9 +33,11 @@
         position: fixed;
         top : 0;
         left : 0;
-        width: 100vw;
+        width: 100%;
         height: calc(var(--app-height) * .10);
         background-color: black;
+        overflow-x: hidden;
+        z-index: 20;
     }
 
     .NavContainer {
@@ -126,7 +128,7 @@
         left : 0;
         top : 0;
         z-index: -2;
-        width : 100vw;
+        width : calc(var(--app-width) * 1);
         height: var(--app-height);
     }
 
@@ -239,7 +241,7 @@
     width: 100%;
     min-height: 30%;
     height : fit-content;
-    margin-bottom: 10vw;
+    margin-bottom: calc(var(--app-width) * .1);;
 }
 
 .ContactField p {
@@ -292,7 +294,7 @@
     margin-bottom: 2vw;
     background: linear-gradient(to bottom, red 0%, darkred 100%);
     color: black;
-    width: 7vw;
+    width: calc(var(--app-width) * .07);
     font-size: 1.2vw;
 }
 
@@ -416,7 +418,7 @@
 
 .SwitchButton {
     height: 100%;
-    width: 30vw;
+    width: calc(var(--app-width) * .30);;
     font-size: 3vw;
     color: black;
     background: linear-gradient(to bottom, red 0%, darkred 100%);
@@ -464,9 +466,9 @@
     overflow-y: scroll;
     scrollbar-color: gray;
     scrollbar-track-color: transparent;
-    padding-left: 5vw;
-    padding-right: 5vw;
-    margin-bottom: 3vw;
+    padding-left: calc(var(--app-width) * .05);;
+    padding-right: calc(var(--app-width) * .05);
+    margin-bottom: calc(var(--app-width) * .03);
 }
 
 
@@ -488,17 +490,17 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     place-items: center;
-    row-gap: 5vw;
-    column-gap: 5vw;
-    margin-bottom: 2vw;
+    row-gap: calc(var(--app-width) * .05);
+    column-gap: calc(var(--app-width) * .05);
+    margin-bottom: calc(var(--app-width) * .02);
 }
 
 .MakeButton {
-    width: 20vw;
-    height: 20vw;
+    width: calc(var(--app-width) * .20);
+    height: calc(var(--app-width) * .20);
     background: linear-gradient(to bottom, rgb(64, 64, 64), rgb(76, 76, 76) 100%);
     margin: 0 0 0 0;
-    padding: 2vw 2vw 2vw 2vw;
+    padding: calc(var(--app-width) * .02) calc(var(--app-width) * .02) calc(var(--app-width) * .02) calc(var(--app-width) * .02);
     border-radius: 25px;
     border-color: transparent;
     overflow-x: hidden;
@@ -542,8 +544,8 @@
     justify-content: center;
     height: 12%;
     width: 100%;
-    margin-top: 5vw;
-    margin-bottom: 5vw;
+    margin-top: calc(var(--app-width) * .05);
+    margin-bottom: calc(var(--app-width) * .05)
 }
 
 .VehicleInformationField input {
@@ -636,7 +638,7 @@
 
 .UploadedPhotosContainer {
     display: flex;
-    margin-top: 2vw;
+    margin-top: calc(var(--app-width) * .02);
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
@@ -672,8 +674,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 35vw;
-    height: 35vw;
+    width: calc(var(--app-width) * .35);
+    height: calc(var(--app-width) * .35);
 }
 
 .UploadedPhoto img {
@@ -719,11 +721,11 @@
 .InquiryButton {
     background-color: black;
     color: white;
-    width: 20vw;
+    width: calc(var(--app-width) * .20);
     border-radius: 25px;
     font-size: 3vw;
-    margin-left: 2vw;
-    margin-right: 2vw;
+    margin-left: calc(var(--app-width) * .02);
+    margin-right: calc(var(--app-width) * .02);
 }
 
 .InsuranceField input {
@@ -775,10 +777,10 @@
 .SubmitInsurance {
     background: linear-gradient(to bottom, red 0%, darkred 100%);
     color: black;
-    width: 7vw;
+    width: calc(var(--app-width) * .07);
     font-size: 1.2vw;
-    margin-top: 2vw;
-    margin-bottom: 2vw;
+    margin-top: calc(var(--app-width) * .02);
+    margin-bottom: calc(var(--app-width) * .02);
 }
 
 /* 
@@ -811,15 +813,27 @@
         grid-template-columns: 1fr 1fr;
         place-items: center;
         width: 90%;
-        height: 65%;
-        margin-bottom: 10vh;
-        overflow-y: scroll;
+        height: 50%;
+        margin-bottom: calc(var(--app-height) * .10);
+        overflow-y: auto;
+
+        background-color: rgb(64, 64, 64);
+        padding: 10px 10px 10px 10px;
+        border-color: white;
+        border-width: 2px;
+        border-style: solid;
+        border-radius: 35px;
+        box-shadow: 0 0 5px 5px rgb(139, 139, 139);
+
+        overflow: auto auto;
+        scrollbar-color: white transparent;
+        scrollbar-width: thin;
     }
 
     @media (min-width : 600px) {
         .Review {
             height : 50%;
-            margin-bottom : 10lvh
+            margin-bottom : calc(var(--app-height) * .10);
         }
     }
 
@@ -828,7 +842,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        width: 25vw;
+        width: calc(var(--app-width) * .25);
         height: fit-content;
         font-size: 3vw;
         text-align: center;
@@ -837,7 +851,7 @@
 
     .Validator {
         color: red;
-        height: 10vw;
+        height: calc(var(--app-width) * .1);
         margin: 0 0 0 0;
         text-wrap: nowrap;
     }
@@ -845,17 +859,17 @@
     .ConfirmButton {
         background-color: black;
         color: white;
-        width: 20vw;
+        width: calc(var(--app-width) * .2);
         border-radius: 35px;
-        height: 8vw;
-        font-size: 3vw;
-        margin-top: .5vw;
-        margin-bottom: .5vw;
+        height: calc(var(--app-width) * .08);
+        font-size: calc(var(--app-width) * .03);
+        margin-top: calc(var(--app-width) * .005);
+        margin-bottom: calc(var(--app-width) * .005);
     }
 
     .LoadingPage {
-        width: 100vw;
-        height: 100vh;
+        width: calc(var(--app-width) * 1);
+        height: calc(var(--app-height) * 1);;
         background-color: white;
     }
 
@@ -880,8 +894,8 @@
         position: absolute;
         left : 0;
         top : 0;
-        width: 100vw;
-        height: 100vh; 
+        width: calc(var(--app-width) * 1);
+        height: calc(var(--app-height) * 1); 
         background-color: white;
     }
 

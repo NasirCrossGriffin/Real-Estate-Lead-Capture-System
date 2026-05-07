@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const RealEstateQuery = require('../models/real-estate-query');
 const RealEstatePhoto = require("../models/real-estate-photo");
+const Organization = require('../models/organization');
+const User = require('../models/user');
 
 
 // CREATE
@@ -12,6 +14,14 @@ router.post('/', async (req, res) => {
     const populated = await RealEstateQuery.findById(doc._id)
       .populate('organization')
       .populate('user');
+
+    const lead = await RealEstateQuery.findById(doc._id);
+
+    try {
+      sendToZapier(lead._id)
+    } catch(error) {
+      console.log(error)
+    }
 
     return res.status(201).json(populated);
   } catch (err) {
@@ -221,5 +231,44 @@ router.get("/organization/:organizationId/filtered", async (req, res) => {
     });
   }
 });
+
+//middleware 
+
+async function sendToZapier(queryId) {
+  const lead = await RealEstateQuery.findById(queryId);
+  const organizationId = lead.organization._id;
+  const organization = await Organization.findById(organizationId);
+  const user = await User.findById(lead.user._id);
+
+  if (organization.webhook === null) return;
+
+  try {
+    console.log({firstName : user.firstName,
+      lastName : user.lastName,
+      phone : user.phoneNumber,
+      email : user.email})
+
+    const response = await fetch(organization.webhook, {
+      headers: { "content-type": "application/json" },
+      method: "POST",
+      body: JSON.stringify({
+        lead : {
+          firstName : user.firstName,
+          lastName : user.lastName,
+          phone : user.phoneNumber,
+          email : user.email,
+          address : lead.address,
+          city : lead.city,
+          state : lead.state,
+          zipCode : lead.zipCode
+        }
+      })
+    });
+
+    console.log(await response.text());
+  } catch(error) {
+    console.log("Unable to route to zapier");
+  }
+}
 
 module.exports = router;

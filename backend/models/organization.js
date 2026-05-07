@@ -17,6 +17,16 @@ const OrganizationSchema = new mongoose.Schema(
       required: true,
       trim: true
     },
+    phone: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    webhook : {
+      type: String,
+      required: false,
+      trim: true,
+    },
     logo: {
       type: String, // URL or file path
       required: false

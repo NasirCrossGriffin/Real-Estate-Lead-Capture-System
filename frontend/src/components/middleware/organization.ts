@@ -82,7 +82,7 @@ export async function getOrganizationById(organizationId: string) {
 
 export async function updateOrganization(
   organizationId: string,
-  updates: OrganizationUpdate
+  updates: any
 ) {
     const url = await getBaseUrl();
 

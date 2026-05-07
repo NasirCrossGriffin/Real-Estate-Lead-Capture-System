@@ -10,6 +10,7 @@ import { uploadToS3 } from './middleware/s3';
 import { CreateRealEstatePhoto } from './middleware/real-estate-photo';
 import { CreateRealEstateQuery } from './middleware/real-estate-query';
 import { newContact } from './middleware/contact';
+import LegalFooter from './LegalFooter';
 import dayjs, { Dayjs } from "dayjs";
 
 
@@ -92,6 +93,11 @@ function IngestionPage() {
         if (service.toLocaleLowerCase() === 'sell' || 
         service.toLocaleLowerCase() === 'buy' || 
         service.toLocaleLowerCase() === 'invest') {
+            if (service !== 'sell') {
+                setFacingForeclosure(false)
+                setAddress("N/A")
+            }
+
             setValidService(true);
             return;
         }
@@ -99,30 +105,6 @@ function IngestionPage() {
         setValidService(false);
      }, [service])
 
-     useEffect(() => {
-        const setHeight = () => {
-            const height = window.innerHeight;
-
-            console.log(height);
-
-            document.documentElement.style.setProperty("--app-height", `${height}px`);
-        };
-
-        setHeight();
-
-        function handleViewportChange() {
-            // Let mobile Chrome finish resizing after orientation/UI changes
-            requestAnimationFrame(() => {
-              requestAnimationFrame(() => {
-                setHeight();
-              });
-            });
-          }
-
-        screen.orientation.addEventListener("change", (event) => {
-            handleViewportChange();
-          });
-    }, []);
 
     useEffect(() => {
         const getorganization = async () => {
@@ -176,12 +158,6 @@ function IngestionPage() {
             setAuctionDate("N/A")
         }
     }, [facingForeclosure])
-
-    useEffect(() => {
-        if (formIndex === 3) (
-            generateUrlPreviews()
-        )
-    }, [formIndex])
     
     function generateUrlPreviews() {
         var newURL = null;
@@ -468,6 +444,8 @@ function IngestionPage() {
     }
 
     async function submitInquiry() {
+        autofill();
+
         const validated = runAllValidators();
 
         console.log(validated);
@@ -537,6 +515,34 @@ function IngestionPage() {
         await setService(value);
     }
 
+    function iteratePage() {
+        if (formIndex === FormState.length - 1) return;
+
+        if (formIndex === 2) {
+            if (service !== 'sell'.toLowerCase()) {
+                setFormIndex(5);
+                return;
+            }
+        } 
+            
+        setFormIndex(formIndex + 1)
+    }
+
+    function decrementPage() {
+        if (formIndex === 0) {
+            setValidService(false);
+            return
+        }
+
+        if (formIndex === 5) {
+            if (service !== 'sell'.toLowerCase()) {
+                setFormIndex(2);
+                return;
+            }
+        } 
+            
+        setFormIndex(formIndex - 1)
+    }
 
 
     return (
@@ -551,7 +557,7 @@ function IngestionPage() {
                 <div className='NavContainer'>
                     <button
                         className='NavButton Back'
-                        onClick={() => {(formIndex - 1) > -1 ? setFormIndex(formIndex - 1) : setValidService(false)}}
+                        onClick={() => decrementPage()}
                     >
                         Back
                     </button>
@@ -562,7 +568,7 @@ function IngestionPage() {
 
                     <button
                         className='NavButton Continue'
-                        onClick={() => {(formIndex + 1) < formState.length ? setFormIndex(formIndex + 1) : null}}
+                        onClick={() => iteratePage()}
                     >
                         Continue
                     </button>
@@ -633,12 +639,15 @@ function IngestionPage() {
                 {
                     formIndex === 1 ?
                         <div className='VehicleInformation fade-in-slide-up'>
-                            <h1>Let's Get Some Information About Your Property</h1>
+                            {service === "sell".toLocaleLowerCase() ? <h1>Let's Get Some Information About Your Property</h1> : null}
+                            {service === "buy".toLocaleLowerCase() ? <h1>Where are you interested in buying?</h1> : null}
+                            {service === "invest".toLocaleLowerCase() ? <h1>Where are you interested in investing?</h1> : null}
+
                             <div className='InputGrid'>
-                                <div className='PropertyInput'>
+                                {service === "sell".toLocaleLowerCase() ? <div className='PropertyInput'>
                                     <label htmlFor='address'>Address</label>
                                     <input placeholder='Address' name='address' value={address} onInput={(e) => {setAddress(e.currentTarget.value)}}/>
-                                </div>
+                                </div> : null}
                        
                                 <div className='PropertyInput'>
                                     <label htmlFor='city'>City</label>
@@ -769,7 +778,7 @@ function IngestionPage() {
                     formIndex === 5 ?
                         <div className='SelectAppointmentDate fade-in-slide-up'>
                             <div className='SelectAppointmentDateContainer'>
-                                <h1>Select a date and time for your appointment</h1>
+                                <h1>Select a date and time for your consultation</h1>
 
                                 <div className='DatePicker'>
                                     <AppointmentDatePicker setIsoString={setIsoString} dt={dt} setDt={setDt}/>
@@ -791,7 +800,7 @@ function IngestionPage() {
                             </button>
 
                             <div className='ReviewItem'>
-                                <strong>Appointment:</strong> {formatIsoString(isoString)}
+                                <strong>Consultation:</strong> {formatIsoString(isoString)}
                                 {appointmentValidator !== '' ? <p className='Validator'>{appointmentValidator}</p> : null}
                             </div>
                             
@@ -814,6 +823,11 @@ function IngestionPage() {
                                 <div className='ReviewItem'>
                                     <strong>Email:</strong> {email}
                                     {emailValidator !== '' ? <p className='Validator'>{emailValidator}</p> : null}
+                                </div>
+
+                                <div className='ReviewItem'>
+                                    <strong>Address:</strong> {address}
+                                    {addressValidator !== '' ? <p className='Validator'>{addressValidator}</p> : null}
                                 </div>
 
                                 <div className='ReviewItem'>
@@ -855,6 +869,9 @@ function IngestionPage() {
                                     <strong>Auction Date:</strong> {auctionDate}
                                     {auctionDateValidator !== '' ? <p className='Validator'>{auctionDateValidator}</p> : null}
                                 </div>
+                            </div>
+
+                            <div className='Space'>
                             </div>
                         </div>
                     : null

@@ -7,17 +7,21 @@
         justify-content: flex-end;
         left: 0;
         top : 0;
-        width: 100vw;
+        width: calc(var(--app-width) * 1);
         height: var(--app-height);
         background-color: transparent;
+        padding : 0 0 0 0;
+        overflow-x: hidden;
+        overflow-y: hidden;
     }
 
     .NavButton {
         position: relative;
         background-color: white;
         color : black;
-        width: 10vw;
-        font-size: 1.2vw;
+        width: calc(var(--app-width) * .10);
+        font-size: clamp(14px, 1.2vw, 22px);
+
         border-radius: 25px;
         font-family: 'Montserrat';
         box-shadow: 0 0 5px 5px rgb(139, 139, 139);
@@ -33,9 +37,10 @@
         position: fixed;
         top : 0;
         left : 0;
-        width: 100vw;
+        width: 100%;
         height: calc(var(--app-height) * .10);
         background-color: black;
+        z-index: 20;
     }
 
     .NavContainer {
@@ -100,7 +105,7 @@
         left : 0;
         top : 0;
         z-index: -2;
-        width : 100vw;
+        width: calc(var(--app-width) * 1);
         height: 100lvh;
 
         display: flex;
@@ -112,7 +117,7 @@
 
     .SystemBackgroundImage {
         position: relative;
-        width : 100vw;
+        width: calc(var(--app-width) * 1);
         height : fit-content;
         z-index: -2;
 
@@ -177,7 +182,8 @@
     .SelectAppointmentDateContainer h1 {
         font-family: 'Montserrat';
         color: white;
-        font-size: 2.5vw;
+        font-size: clamp(24px, 2.5vw, 48px);
+
     }
 
     .CustomerInformation h2, 
@@ -188,7 +194,8 @@
     .ConfirmationPage h2 {
         font-family: 'Montserrat';
         color: white;
-        font-size: 2vw;
+        font-size: clamp(20px, 2vw, 38px);
+
     }
 
     .NameFields, .ContactFields {
@@ -211,7 +218,8 @@
     }
 
     .ContactField p {
-        font-size : 1.3vw;
+        font-size: clamp(13px, 1.3vw, 22px);
+
         color: white;
     }
 
@@ -219,7 +227,8 @@
         position: relative;
         width : 100%;
         aspect-ratio : 14/1;
-        font-size: 1.1vw;
+        font-size: clamp(14px, 1.1vw, 20px);
+
         color: white;
         background-color: rgb(64, 64, 64);
         border-color: rgb(139, 139, 139);
@@ -240,17 +249,19 @@
         width: 100%;
         font-family: 'Montserrat';
         font-weight: 500;
-        font-size: 1.4vw;
+        font-size: clamp(14px, 1.4vw, 24px);
+
         color: white;
         z-index: 2;
     }
 
     .CustomerInformation button {
-        margin-bottom: 2vw;
+        margin-bottom: calc(var(--app-width) * .02);
         background: linear-gradient(to bottom, red 0%, darkred 100%);
         color: white;
-        width: 7vw;
-        font-size: 1.2vw;
+        width: calc(var(--app-width) * .07);
+        font-size: clamp(14px, 1.2vw, 22px);
+
     }
 
     /* 
@@ -289,7 +300,8 @@
         aspect-ratio: 12/1;
         border-color: rgb(139, 139, 139);
         border-radius: 0;
-        font-size: 1.1vw;
+        font-size: clamp(14px, 1.1vw, 20px);
+
         color: white;
         background-color: rgb(64, 64, 64);
         border-style: solid;
@@ -309,7 +321,8 @@
         width: 70%;
         font-family: 'Montserrat';
         font-weight: 500;
-        font-size: 1.4vw;
+        font-size: clamp(14px, 1.4vw, 24px);
+
         color: rgb(255, 255, 255);
         text-wrap: nowrap;
         z-index: 2;
@@ -322,7 +335,8 @@
         padding: 0 0 0 0;
         border-color: rgb(139, 139, 139);
         border-radius: 0;
-        font-size: 1.1vw;
+        font-size: clamp(14px, 1.1vw, 20px);
+
         color: white;
         background-color: rgb(64, 64, 64);
         border-style: solid;
@@ -361,8 +375,9 @@
 
     .SwitchButton {
         height: 100%;
-        width: 12vw;
-        font-size: 1vw;
+        width: calc(var(--app-width) * .12);
+        font-size: clamp(14px, 1vw, 18px);
+
         color: white;
         background: linear-gradient(to bottom, red 0%, darkred 100%);
     }
@@ -379,7 +394,8 @@
     .ManualEntry input {
         width: 80%;
         height: 90%;
-        font-size: 1.1vw;
+        font-size: clamp(14px, 1.1vw, 20px);
+
         color: white;
         background-color: rgb(64, 64, 64);
         border-color: rgb(255, 255, 255);
@@ -389,7 +405,8 @@
     .ManualEntry button {
         width: 15%;
         height: 100%;
-        font-size: 1vw;
+        font-size: clamp(14px, 1vw, 18px);
+
         color: white;
         background: linear-gradient(to bottom, red 0%, darkred 100%);
     }
@@ -403,9 +420,9 @@
         overflow-y: scroll;
         scrollbar-color: gray;
         scrollbar-track-color: transparent;
-        padding-left: 5vw;
-        padding-right: 5vw;
-        margin-bottom: 3vw;
+        padding-left: calc(var(--app-width) * .05);;
+        padding-right: calc(var(--app-width) * .05);
+        margin-bottom: calc(var(--app-width) * .03);
     }
 
     .MakeGridContainer::-webkit-scrollbar {
@@ -426,17 +443,17 @@
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
         place-items: center;
-        row-gap: 5vw;
-        column-gap: 5vw;
-        margin-bottom: 2vw;
+        row-gap: calc(var(--app-width) * .05);
+        column-gap: calc(var(--app-width) * .05);
+        margin-bottom: calc(var(--app-width) * .02);
     }
 
     .MakeButton {
-        width: 10vw;
+        width: calc(var(--app-width) * .10);
         height: 10vw;
         background: linear-gradient(to bottom, rgb(64, 64, 64), rgb(76, 76, 76) 100%);
         margin: 0 0 0 0;
-        padding: 2vw 2vw 2vw 2vw;
+        padding: calc(var(--app-width) * .02) calc(var(--app-width) * .02) calc(var(--app-width) * .02) calc(var(--app-width) * .02);
         border-radius: 25px;
         border-color: transparent;
         overflow-x: hidden;
@@ -489,7 +506,8 @@
 
     .VehicleInformationField label {
         font-family: 'Montserrat';
-        font-size: 1.2vw;
+        font-size: clamp(14px, 1.2vw, 22px);
+
         width: 80%;
     }
 
@@ -519,7 +537,8 @@
         border-color: white;
         resize: none;
         font-family: 'Montserrat';
-        font-size: 1.4vw;
+        font-size: clamp(16px, 1.4vw, 26px);
+
         box-shadow: 0 0 10px 10px rgb(139, 139, 139);
         color : white
     }
@@ -565,7 +584,7 @@
 
     .UploadedPhotosContainer {
         display: flex;
-        margin-top: 2vw;
+        margin-top: calc(var(--app-width) * .02);
         flex-direction: column;
         align-items: center;
         justify-content: flex-start;
@@ -601,8 +620,8 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        width: 15vw;
-        height: 15vw;
+        width: calc(var(--app-width) * .15);
+        height: calc(var(--app-width) * .15);
     }
 
     .UploadedPhoto img {
@@ -637,12 +656,14 @@
     .InsuranceField input {
         height: 35%;
         width: 80%;
-        font-size: 1.4vw;
+        font-size: clamp(16px, 1.4vw, 26px);
+
     }
 
     .InsuranceField label {
         font-family: 'Montserrat';
-        font-size: 1.2vw;
+        font-size: clamp(14px, 1.2vw, 22px);
+
         width: 80%;
     }
 
@@ -667,10 +688,11 @@
         color: white;
         border-radius: 25px;
         background-color: black;
-        width: 7vw;
-        font-size: 1.2vw;
-        margin-left: 2vw;
-        margin-right: 2vw;
+        width: calc(var(--app-width) * .07);
+        font-size: clamp(14px, 1.2vw, 22px);
+
+        margin-left: calc(var(--app-width) * .02);
+        margin-right: calc(var(--app-width) * .02);
     }
 
     .InsuranceInquiry h2 {
@@ -696,10 +718,11 @@
         color: white;
         border-radius: 25px;
         background-color: black;
-        width: 7vw;
-        font-size: 1.2vw;
-        margin-top: 2vw;
-        margin-bottom: 2vw;
+        width: calc(var(--app-width) * .07);
+        font-size: clamp(14px, 1.2vw, 22px);
+
+        margin-top: calc(var(--app-width) * .02);
+        margin-bottom: calc(var(--app-width) * .02);
     }
 
     /* 
@@ -739,19 +762,50 @@
         grid-template-columns: 1fr 1fr 1fr ;
         place-items: center;
         width: 70%;
-        height: 65%;
-        margin-bottom: 20vw;
+        height: 40%;
+        overflow-y: auto;
+        bottom: calc(var(--app-width) * .5);
+        background-color: rgb(64, 64, 64);
+        padding: 25px 25px 25px 25px;
+        border-color: white;
+        border-width: 2px;
+        border-style: solid;
+        border-radius: 35px;
+        box-shadow: 0 0 5px 5px rgb(139, 139, 139);
+
+        overflow: auto auto;
+        scrollbar-color: white transparent;
+        scrollbar-width: thin;
     }
+
+    .Review::-webkit-scrollbar-thumb {
+        background: white;
+    }
+
+    .Review::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .Review::-webkit-scrollbar-button {
+        display: none;
+    }
+
+
 
     .ReviewItem {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        width: 20vw;
-        font-size: 1.3vw;
+        width: calc(var(--app-width) * .2);
+        font-size: clamp(14px, 1.3vw, 22px);
+
         text-align: center;
         color: rgb(255, 255, 255);
+    }
+
+    .Space {
+        height: 10%
     }
 
     .Validator {
@@ -762,15 +816,14 @@
     .ConfirmButton {
         background-color : black;
         color: white;
-        width: 8vw;
+        width: calc(var(--app-width) * .08);
         border-radius: 25px;
-        font-size: 1.2vw;
-        margin-top: .5vw;
-        margin-bottom: .5vw;
+        font-size: clamp(14px, 1.2vw, 22px);
     }
 
     .LoadingPage {
-        width: 100vw;
+        position: relative;
+        width: var(--app-width);
         height: var(--app-height);
         background-color: white;
     }
@@ -796,7 +849,7 @@
         position: absolute;
         left : 0;
         top : 0;
-        width: 100vw;
+        width: calc(var(--app-width) * 1);
         height: var(--app-height);
         background-color: white;
     }
@@ -828,7 +881,7 @@
     }
 
     .ServiceSelector button {
-        font-size: 4vw;
+        font-size: clamp(28px, 4vw, 72px);
         font-family: 'Montserrat';
         font-weight: bold;
         color: black;
@@ -887,3 +940,6 @@
             transform: translateY(0);
         }
     }
+
+    
+    

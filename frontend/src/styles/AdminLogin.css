@@ -1,10 +1,8 @@
 @media (orientation : landscape) {
     .AdminLogin {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
+        position: relative;
+        width: var(--app-width);
+        height: var(--app-height);
     }
 
     .LoginForm {
@@ -19,6 +17,7 @@
         top : 50%;
         transform: translateX(-50%) translateY(-50%);
         background-color: white;
+        overflow-x: hidden;
     }
 
     .LoginForm h1 {

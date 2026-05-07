@@ -1,11 +1,6 @@
 body {
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden auto;
-} 
-
-@media (max-width : 700px) {
-    body {
-        aspect-ratio: 16/9;
-    } 
+    width: (var(--app-width));
+    padding : 0 0 0 0;
+    margin : 0 0 0 0;
+    overflow-x: auto;    
 }
