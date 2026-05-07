@@ -444,8 +444,6 @@ function IngestionPage() {
     }
 
     async function submitInquiry() {
-        autofill();
-
         const validated = runAllValidators();
 
         console.log(validated);
@@ -792,12 +790,34 @@ function IngestionPage() {
                     formIndex === 6 ? <div className='ConfirmationPage fade-in-slide-up'>
                             <h1>Review and Confirm</h1>
 
-                            <button
-                                className='ConfirmButton'
-                                onClick={() => {submitInquiry()}}
-                            >
-                                Confirm
-                            </button>
+                            <div className='Buttons' style={{
+                                    display : 'flex', 
+                                    flexDirection : 'row', 
+                                    justifyContent : 'center', 
+                                    alignItems : 'center'
+                                }}>
+                                <button
+                                    className='ConfirmButton'
+                                    onClick={() => {submitInquiry()}}
+                                    style={{
+                                        marginLeft : "calc(var(--app-width) * .02)",
+                                        marginRight : "calc(var(--app-width) * .02)",
+                                    }}
+                                >
+                                    Confirm
+                                </button>
+
+                                {organization.name === 'test' ? <button
+                                    className='ConfirmButton'
+                                    onClick={() => {autofill()}}
+                                    style={{
+                                        marginLeft : "calc(var(--app-width) * .02)",
+                                        marginRight : "calc(var(--app-width) * .02)",
+                                    }}
+                                >
+                                    Autofill
+                                </button> : null}
+                            </div>
 
                             <div className='ReviewItem'>
                                 <strong>Consultation:</strong> {formatIsoString(isoString)}

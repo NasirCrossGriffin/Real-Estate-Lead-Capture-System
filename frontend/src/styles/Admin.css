@@ -284,7 +284,7 @@
 
     .CRMIntegration {
         position: relative;
-        margin-top: calc(var(--app-height) * 0.15);
+        margin-top: calc(var(--app-height) * 0.25);
         width: 90%;
 
         display: flex;
@@ -367,7 +367,7 @@
         justify-content: flex-start;
         align-items: center;
         position: relative;
-        width: 100vw;
+        width: var(--app-width);
         background-color: white;
     }
 
@@ -416,7 +416,7 @@
 
     .AdminNav {
         position: fixed;
-        width : 100vw;
+        width: var(--app-width);
         height: 12lvh;
         top : 0;
         left: 0;

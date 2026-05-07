@@ -27,6 +27,7 @@ function LegalFooter({
           <a href="/realestate/real-estate-disclaimer">Real Estate Disclaimer</a>
           <a href="/realestate/accessibility">Accessibility</a>
           <a href="/realestate/contact">Contact</a>
+          <a href="/realestate/admin">Portal</a>
         </nav>
 
         <div className="footer-disclaimers">

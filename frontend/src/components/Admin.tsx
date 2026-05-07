@@ -316,7 +316,7 @@ function Admin() {
                     </div> : null
                 }
             </div>
-            {inquiries && loading === false ? <div className='AdminDashboard'>
+            {inquiries && loading === false && isAdmin === true ? <div className='AdminDashboard'>
                 <div className='CRMIntegration'>
                     <div className='CRMContainer'>
                         <button onClick={() => setInputWebhook(!inputWebhook)}>Integrate CRM</button>
